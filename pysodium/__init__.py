@@ -193,6 +193,8 @@ if sodium_version_check(1, 0, 12):
     crypto_aead_xchacha20poly1305_ietf_NPUBBYTES = sodium.crypto_aead_xchacha20poly1305_ietf_npubbytes()
     crypto_aead_xchacha20poly1305_ietf_NONCEBYTES = crypto_aead_xchacha20poly1305_ietf_NPUBBYTES
     crypto_aead_xchacha20poly1305_ietf_ABYTES = sodium.crypto_aead_xchacha20poly1305_ietf_abytes()
+    crypto_stream_xchacha20_NONCEBYTES = sodium.crypto_stream_xchacha20_noncebytes()
+    crypto_stream_xchacha20_KEYBYTES = sodium.crypto_stream_xchacha20_keybytes()
     sodium.crypto_pwhash_bytes_max.restype=ctypes.c_uint
     sodium.crypto_pwhash_opslimit_max.restype=ctypes.c_uint
     sodium.crypto_pwhash_memlimit_max.restype=ctypes.c_uint
@@ -345,6 +347,46 @@ def crypto_stream_chacha20_xor_ic(message, nonce, initial_counter, key):
     c = ctypes.create_string_buffer(len(message))
 
     __check(sodium.crypto_stream_chacha20_xor_ic(c, message, mlen, nonce, ic, key))
+
+    return c.raw
+
+# int crypto_stream_xchacha20(unsigned char *c, unsigned long long clen, const unsigned char *n, const unsigned char *k)
+def crypto_stream_xchacha20(length, nonce, key):
+    if len(nonce) != crypto_stream_xchacha20_NONCEBYTES: raise ValueError("truncated nonce")
+    if len(key) != crypto_stream_xchacha20_KEYBYTES: raise ValueError("truncated key")
+
+    clen = ctypes.c_longlong(length)
+
+    c = ctypes.create_string_buffer(length)
+
+    __check(sodium.crypto_stream_xchacha20(c, clen, nonce, key))
+
+    return c.raw
+
+# crypto_stream_xchacha20_xor(unsigned char *c, const unsigned char *m, unsigned long long mlen, const unsigned char *n, const unsigned char *k)
+def crypto_stream_xchacha20_xor(message, nonce, key):
+    if len(nonce) != crypto_stream_xchacha20_NONCEBYTES: raise ValueError("truncated nonce")
+    if len(key) != crypto_stream_xchacha20_KEYBYTES: raise ValueError("truncated key")
+
+    mlen = ctypes.c_longlong(len(message))
+
+    c = ctypes.create_string_buffer(len(message))
+
+    __check(sodium.crypto_stream_xchacha20_xor(c, message, mlen, nonce, key))
+
+    return c.raw
+
+# crypto_stream_chacha20_xor_ic(unsigned char *c, const unsigned char *m, unsigned long long mlen, const unsigned char *n, uint64_t ic, const unsigned char *k)
+def crypto_stream_xchacha20_xor_ic(message, nonce, initial_counter, key):
+    if len(nonce) != crypto_stream_xchacha20_NONCEBYTES: raise ValueError("truncated nonce")
+    if len(key) != crypto_stream_xchacha20_KEYBYTES: raise ValueError("truncated key")
+
+    mlen = ctypes.c_longlong(len(message))
+    ic = ctypes.c_uint64(initial_counter)
+
+    c = ctypes.create_string_buffer(len(message))
+
+    __check(sodium.crypto_stream_xchacha20_xor_ic(c, message, mlen, nonce, ic, key))
 
     return c.raw
 
