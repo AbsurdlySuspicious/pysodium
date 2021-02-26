@@ -308,6 +308,19 @@ def crypto_scalarmult_curve25519_base(n):
     __check(sodium.crypto_scalarmult_curve25519_base(buf, n))
     return buf.raw
 
+# int crypto_stream_chacha20(unsigned char *c, unsigned long long clen, const unsigned char *n, const unsigned char *k)
+def crypto_stream_chacha20(length, nonce, key):
+    if len(nonce) != crypto_stream_chacha20_NONCEBYTES: raise ValueError("truncated nonce")
+    if len(key) != crypto_stream_chacha20_KEYBYTES: raise ValueError("truncated key")
+
+    clen = ctypes.c_longlong(length)
+
+    c = ctypes.create_string_buffer(length)
+
+    __check(sodium.crypto_stream_chacha20(c, clen, nonce, key))
+
+    return c.raw
+
 # crypto_stream_chacha20_xor(unsigned char *c, const unsigned char *m, unsigned long long mlen, const unsigned char *n, const unsigned char *k)
 def crypto_stream_chacha20_xor(message, nonce, key):
     if len(nonce) != crypto_stream_chacha20_NONCEBYTES: raise ValueError("truncated nonce")
