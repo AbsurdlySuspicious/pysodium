@@ -29,6 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import ctypes
 import ctypes.util
+from typing import Union
 
 sodium = ctypes.cdll.LoadLibrary(ctypes.util.find_library('sodium') or ctypes.util.find_library('libsodium'))
 if not sodium._name:
@@ -351,7 +352,7 @@ def crypto_stream_chacha20_xor_ic(message: bytes, nonce: bytes, initial_counter:
 
     return c.raw
 
-def crypto_stream_chacha20_xor_ic_inplace(message: bytearray, nonce: bytes, initial_counter: int, key: bytes):
+def crypto_stream_chacha20_xor_ic_inplace(message: Union[bytearray, memoryview], nonce: bytes, initial_counter: int, key: bytes):
     if len(nonce) != crypto_stream_chacha20_NONCEBYTES: raise ValueError("truncated nonce")
     if len(key) != crypto_stream_chacha20_KEYBYTES: raise ValueError("truncated key")
 
@@ -402,7 +403,7 @@ def crypto_stream_xchacha20_xor_ic(message: bytes, nonce: bytes, initial_counter
 
     return c.raw
 
-def crypto_stream_xchacha20_xor_ic_inplace(message: bytearray, nonce: bytes, initial_counter: int, key: bytes):
+def crypto_stream_xchacha20_xor_ic_inplace(message: Union[bytearray, memoryview], nonce: bytes, initial_counter: int, key: bytes):
     if len(nonce) != crypto_stream_xchacha20_NONCEBYTES: raise ValueError("truncated nonce")
     if len(key) != crypto_stream_xchacha20_KEYBYTES: raise ValueError("truncated key")
 
