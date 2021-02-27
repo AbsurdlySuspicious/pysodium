@@ -37,9 +37,10 @@ if not sodium._name:
 sodium.sodium_version_string.restype = ctypes.c_char_p
 
 try:
-    sodium_major = int(sodium.sodium_version_string().decode('utf8').split('.')[0])
-    sodium_minor = int(sodium.sodium_version_string().decode('utf8').split('.')[1])
-    sodium_patch = int(sodium.sodium_version_string().decode('utf8').split('.')[2])
+    _sodium_version = sodium.sodium_version_string().decode('ascii').split('.')
+    sodium_major = int(_sodium_version[0])
+    sodium_minor = int(_sodium_version[1])
+    sodium_patch = int(_sodium_version[2])
 except (IndexError, ValueError):
     raise ValueError('Unable to parse version string from libsodium')
 
