@@ -312,7 +312,7 @@ def crypto_scalarmult_curve25519_base(n):
     return buf.raw
 
 # int crypto_stream_chacha20(unsigned char *c, unsigned long long clen, const unsigned char *n, const unsigned char *k)
-def crypto_stream_chacha20(length, nonce, key):
+def crypto_stream_chacha20(length: int, nonce: bytes, key: bytes) -> bytes:
     if len(nonce) != crypto_stream_chacha20_NONCEBYTES: raise ValueError("truncated nonce")
     if len(key) != crypto_stream_chacha20_KEYBYTES: raise ValueError("truncated key")
 
@@ -325,7 +325,7 @@ def crypto_stream_chacha20(length, nonce, key):
     return c.raw
 
 # crypto_stream_chacha20_xor(unsigned char *c, const unsigned char *m, unsigned long long mlen, const unsigned char *n, const unsigned char *k)
-def crypto_stream_chacha20_xor(message, nonce, key):
+def crypto_stream_chacha20_xor(message: bytes, nonce: bytes, key: bytes) -> bytes:
     if len(nonce) != crypto_stream_chacha20_NONCEBYTES: raise ValueError("truncated nonce")
     if len(key) != crypto_stream_chacha20_KEYBYTES: raise ValueError("truncated key")
 
@@ -338,7 +338,7 @@ def crypto_stream_chacha20_xor(message, nonce, key):
     return c.raw
 
 # crypto_stream_chacha20_xor_ic(unsigned char *c, const unsigned char *m, unsigned long long mlen, const unsigned char *n, uint64_t ic, const unsigned char *k)
-def crypto_stream_chacha20_xor_ic(message, nonce, initial_counter, key):
+def crypto_stream_chacha20_xor_ic(message: bytes, nonce: bytes, initial_counter: int, key: bytes) -> bytes:
     if len(nonce) != crypto_stream_chacha20_NONCEBYTES: raise ValueError("truncated nonce")
     if len(key) != crypto_stream_chacha20_KEYBYTES: raise ValueError("truncated key")
 
@@ -351,7 +351,7 @@ def crypto_stream_chacha20_xor_ic(message, nonce, initial_counter, key):
 
     return c.raw
 
-def crypto_stream_chacha20_xor_ic_inplace(message: bytearray, nonce, initial_counter, key):
+def crypto_stream_chacha20_xor_ic_inplace(message: bytearray, nonce: bytes, initial_counter: int, key: bytes):
     if len(nonce) != crypto_stream_chacha20_NONCEBYTES: raise ValueError("truncated nonce")
     if len(key) != crypto_stream_chacha20_KEYBYTES: raise ValueError("truncated key")
 
@@ -363,7 +363,7 @@ def crypto_stream_chacha20_xor_ic_inplace(message: bytearray, nonce, initial_cou
     __check(sodium.crypto_stream_chacha20_xor_ic(m, m, mlen, nonce, ic, key))
 
 # int crypto_stream_xchacha20(unsigned char *c, unsigned long long clen, const unsigned char *n, const unsigned char *k)
-def crypto_stream_xchacha20(length, nonce, key):
+def crypto_stream_xchacha20(length: int, nonce: bytes, key: bytes) -> bytes:
     if len(nonce) != crypto_stream_xchacha20_NONCEBYTES: raise ValueError("truncated nonce")
     if len(key) != crypto_stream_xchacha20_KEYBYTES: raise ValueError("truncated key")
 
@@ -376,7 +376,7 @@ def crypto_stream_xchacha20(length, nonce, key):
     return c.raw
 
 # crypto_stream_xchacha20_xor(unsigned char *c, const unsigned char *m, unsigned long long mlen, const unsigned char *n, const unsigned char *k)
-def crypto_stream_xchacha20_xor(message, nonce, key):
+def crypto_stream_xchacha20_xor(message: bytes, nonce: bytes, key: bytes) -> bytes:
     if len(nonce) != crypto_stream_xchacha20_NONCEBYTES: raise ValueError("truncated nonce")
     if len(key) != crypto_stream_xchacha20_KEYBYTES: raise ValueError("truncated key")
 
@@ -389,7 +389,7 @@ def crypto_stream_xchacha20_xor(message, nonce, key):
     return c.raw
 
 # crypto_stream_chacha20_xor_ic(unsigned char *c, const unsigned char *m, unsigned long long mlen, const unsigned char *n, uint64_t ic, const unsigned char *k)
-def crypto_stream_xchacha20_xor_ic(message, nonce, initial_counter, key):
+def crypto_stream_xchacha20_xor_ic(message: bytes, nonce: bytes, initial_counter: int, key: bytes) -> bytes:
     if len(nonce) != crypto_stream_xchacha20_NONCEBYTES: raise ValueError("truncated nonce")
     if len(key) != crypto_stream_xchacha20_KEYBYTES: raise ValueError("truncated key")
 
@@ -402,7 +402,7 @@ def crypto_stream_xchacha20_xor_ic(message, nonce, initial_counter, key):
 
     return c.raw
 
-def crypto_stream_xchacha20_xor_ic_inplace(message: bytearray, nonce, initial_counter, key):
+def crypto_stream_xchacha20_xor_ic_inplace(message: bytearray, nonce: bytes, initial_counter: int, key: bytes):
     if len(nonce) != crypto_stream_xchacha20_NONCEBYTES: raise ValueError("truncated nonce")
     if len(key) != crypto_stream_xchacha20_KEYBYTES: raise ValueError("truncated key")
 
